@@ -1,0 +1,78 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+<div class="text-center my-5">
+
+    <div class="row">
+        <div class="col-md-6 mb-2">
+            <div class="card">
+                <div class="card-body px-2 py-1">
+                    <div class="text-center">
+                        <p>注文商品：</p>
+                        {% for item in  user.order_set.last.items.all %}
+                            <p>{{ item }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="mb-3">
+        <h1>来店予約カレンダー</h1>
+        <p>{{ start_day }}～{{ end_day }}</p>
+    </div>
+
+    <div class="d-flex mb-2">
+        <div class="mx-3 mr-auto">
+            <a class="btn btn-warning" href="?year={{prev_week.year}}&month={{prev_week.month}}&day={{prev_week.day}}">前週</a>
+        </div>
+        <div class="mx-3">
+            <a class="btn btn-warning" href="?year={{next_week.year}}&month={{next_week.month}}&day={{next_week.day}}">次週</a>
+        </div>
+    </div>
+    <div class="calendar" style="max-width: 100%; overflow: scroll;">
+        <table class="table table-bordered bg-light">
+            <thead class="thead-light">
+                <tr>
+                    <th></th>
+                    {% for day in days %}
+                        {% if day.weekday == 5 %}
+                            <th scope="col" class="text-primary">{{ day | date:"d(D)" }}</th>
+                        {% elif day.weekday == 6 %}
+                            <th scope="col" class="text-danger">{{ day | date:"d(D)" }}</th>
+                        {% else %}
+                            <th scope="col">{{ day | date:"d(D)" }}</th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for hour, schedules in calendar.items %}
+                {% if hour in setting_hour %}
+                    <tr>
+                        <td scope="row" class="bg-white" style="position: sticky !important; left: 0; z-index: 100;">{{ hour }}:00</td>
+                        {% for datetime, _ in schedules.items %}
+                            <td>
+                                <a href="{% url 'booking' order_id datetime.year datetime.month datetime.day hour %}">
+                                ⚪︎
+                                </a>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+<style>
+    .calendar {
+        width: 100px;
+    }
+</style>

@@ -13,7 +13,7 @@
                 {% for order_item in order.items.all %}
                     <div class="row">
                         <div class="col-md-3 text-center">
-                            <img src="/{{ order_item.item.image.url }}" class="img-fluid" alt="{{ order_item.item.title }}">
+                            <img src="{{ order_item.item.image.url }}" class="img-fluid" alt="{{ order_item.item.title }}">
                         </div>
                         <div class="col-md-6">
                             <h5>{{ order_item.item.title }}</h5>

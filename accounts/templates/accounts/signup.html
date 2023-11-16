@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div class="card card-auth my-5 mx-auto">
+<!-- <div class="card card-auth my-5 mx-auto">
     <div class="card-body">
         <h5 class="card-title text-center">サインアップ</h5>
         <form method="post" class="form-auth">
@@ -26,6 +26,554 @@
             </div>
         </form>
     </div>
-</div>
+</div> -->
+
+<section id="sect_regit">
+    <div class="w800">
+        <h2 class="reit_ptitle" style="font-weight: bold;">会員登録</h2>
+        <div class="regit_lead">
+        以下必要事項を入力いただき、
+        <br class="pc_only">
+        「登録」ボタンを押してください。
+        </div>
+        <form action="" method="post" class="form-auth">
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <ul style="list-style: none;">
+                        {% for field_errors in form.errors.values %}
+                            {% for error in field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% csrf_token %}
+            <table class="regit_table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul class="col_02">
+                                <li>
+                                <label class="label-ip">姓
+                                    {% render_field form.first_name class="form-control txt-regit" placeholder="山田" autocomplete="" %}
+                                </label>
+                                </li>
+                                <li>
+                                <label class="label-ip">名
+                                    {% render_field form.last_name class="form-control txt-regit" placeholder="太郎" autocomplete="" %}
+                                </label>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label style="font-weight: bold;">性別</label>
+                            <label class="label-ip">
+                                {% render_field form.gender %}
+                            </label>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="2">
+                            <label class="label-ip">年齢
+                                {% render_field form.age class="form-control txt-regit" %}
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="label-ip">メールアドレス
+                                {% render_field form.email class="form-control txt-regit" placeholder="××××@email.com" autocomplete="email" %}
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="label-ip">
+                                <!-- {% render_field form.address class="form-control txt-regit" placeholder="住所" %} -->
+                                郵便番号
+                                <input type="text" id="郵便番号" onKeyUp="$('#郵便番号').zip2addr('#住所');" name="郵便番号" class="form-control txt-regit" placeholder="000-0000" required>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="label-ip">
+                                住所
+                                <input type="text" id="住所" name="住所" class="form-control txt-regit" placeholder="〇〇県〇〇市〇〇町" required>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="label-ip">電話番号
+                                {% render_field form.tel class="form-control txt-regit" placeholder="000-0000-0000" autocomplete="tel" %}
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="toggle">
+                                <label class="label-ip">パスワード
+                                    {% render_field form.password1 class="form-control txt-regit" placeholder="(半角英数字8文字以上)" autocomplete="password" %}
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="toggle">
+                                <label class="label-ip">パスワード(確認)
+                                    {% render_field form.password2 class="form-control txt-regit" placeholder="" autocomplete="password" %}
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><a type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#service-Modal-{{ item.pk }}">利用規約はこちら</a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <label>
+                            <input type="checkbox" name="agree" value="agreement" required="required">利用規約に同意する
+                        </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="box_btn">
+                <input class="comm_btn btn btn-lg btn-block mx-auto" type="submit" value="→ 登録">
+            </div>
+        </form>
+    </div>
+</section>
+
+  <style>
+    section[id^="sect_"] {
+      padding-top: 60px;
+      padding-right: 0px;
+      padding-left: 0px;
+      padding-bottom: 0px;
+      text-align: center;
+    }
+    
+    [class*="w1000"] {
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+    
+    .step_list {
+      display: flex;
+      overflow: hidden;
+    }
+    
+    .step_list li.nowon {
+      background-color: #da2429;
+      z-index: 2;
+      border-right-style: none;
+    }
+    
+    .step_list li {
+      background-color: #a3a3a3;
+      color: #ffffff;
+      width: 100%;
+      line-height: 1.2em;
+      padding-top: 1em;
+      padding-bottom: 1em;
+      border-right: 1px solid #c0c0c0;
+      position: relative;
+      z-index: 1;
+      list-style: none;
+    }
+    
+    .step_list li.nowon::after {
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 45px 0 45px 1em;
+      border-color: transparent transparent transparent #da2429;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
+    
+    .step_list li .step_num {
+      font-size: 1.4em;
+      padding-bottom: 0.4em;
+      font-weight: bold;
+    }
+    
+    .step_list li:last-child {
+      border-right-style: none;
+    }
+    
+    main section:last-child {
+      padding-bottom: 140px !important;
+    }
+    
+    [class*="w800"] {
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+    
+    .reit_ptitle {
+      font-size: 2rem;
+      padding-bottom: 1em;
+    }
+    
+    .reit_ptitle + .regit_lead {
+      padding-bottom: 2em;
+    }
+    
+    [class*="pc_only"] {
+      display: inline-block !important;
+    }
+    
+    table.regit_table {
+      width: 100%;
+    }
+    
+    table.regit_table th {
+      width: 25%;
+    }
+    
+    table.regit_table td {
+      width: 75%;
+    }
+    
+    table.regit_table th, table.regit_table td {
+      padding: 0.5em 0;
+      text-align: left;
+    }
+    
+    ul[class^="col_"] {
+      display: flex !;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    ul[class^="col_"]>li {
+      float: left;
+      position: relative;
+    }
+    
+    ul[class^="col_02"]>li {
+      width: 48.5%;
+      margin-right: 3%;
+    }
+    
+    .label-ip {
+      display: block;
+    }
+    
+    input[type='text'].txt-regit {
+      width: 100%;
+      padding: 1em 1.5em;
+      transition: 0.2s;
+      border: 1px solid #ccc;
+      border-radius: 2em;
+      background-color: #ffffff;
+      font-size: 1rem;
+    }
+    
+    ul[class^="col_02"]>li:nth-of-type(2n) {
+      margin-right: 0px;
+    }
+    
+    input[type='email'].txt-regit {
+      width: 100%;
+      padding: 1em 1.5em;
+      transition: 0.2s;
+      border: 1px solid #ccc;
+      border-radius: 2em;
+      background-color: #ffffff;
+      font-size: 1rem;
+    }
+    
+    .toggle {
+      position: relative;
+    }
+    
+    input[type='password'].txt-regit {
+      width: 100%;
+      padding: 1em 1.5em;
+      transition: 0.2s;
+      border: 1px solid #ccc;
+      border-radius: 2em;
+      background-color: #ffffff;
+      font-size: 1rem;
+    }
+    
+    .toggle .field {
+      padding-right: 80px;
+    }
+    
+    .field {
+      width: 100%;
+      padding: 15px;
+      border: 0;
+      border: 1px solid #e5e5e5;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    
+    .toggle .btn {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      padding: 5px 8px;
+      border-radius: 5px;
+      background: #e5e5e5;
+    }
+    
+    .btn {
+      display: flex;
+      align-items: center;
+    }
+    
+    .btn-input {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+    }
+    
+    [type="checkbox"], [type="radio"] {
+      padding: 0;
+    }
+    
+    .toggle .btn-label {
+      width: 30px;
+      text-align: center;
+    }
+    
+    .btn-label {
+      font-size: 18px;
+      cursor: pointer;
+    }
+    
+    .fa, .fas {
+      font-weight: 900;
+    }
+    
+    .fa, .far, .fas {
+      font-family: "Font Awesome 5 Free";
+    }
+    
+    .fa, .fab, .fad, .fal, .far, .fas {
+      -webkit-font-smoothing: antialiased;
+      display: inline-block;
+      font-size: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1;
+    }
+    
+    .fa-eye::before {
+      content: "\f06e";
+    }
+    
+    input[type='tel'].txt-regit {
+      width: 100%;
+      padding: 1em 1.5em;
+      transition: 0.2s;
+      border: 1px solid #ccc;
+      border-radius: 2em;
+      background-color: #ffffff;
+      font-size: 1rem;
+    }
+    
+    a.term_link {
+      color: #da2429;
+      text-decoration: underline;
+    }
+    
+    table.regit_table + .box_btn {
+      padding-top: 2em;
+    }
+    
+    .box_btn {
+      text-align: center;
+    }
+    
+    
+    
+    [class^="comm_btn"] {
+      display: inline-block;
+      text-align: center;
+      padding-top: 0.5em;
+      padding-right: 2em;
+      padding-left: 1.75em;
+      padding-bottom: 0.6em;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      background-color: #da2429;
+      line-height: 1.4em;
+      min-width: 140px;
+      margin-bottom: 10px;
+      color: #ffffff;
+      outline: none;
+      border-style: none;
+      transition: opacity 300ms 0s ease;
+      cursor: pointer;
+      font-family: 'Noto Sans JP', sans-serif;
+      width: 100%;
+    }
+    
+    [class^="comm_btn_small"] {
+      display: inline-block;
+      text-align: center;
+      padding-top: 0.25em;
+      padding-right: 1.5em;
+      padding-left: 1em;
+      padding-bottom: 0.3em;
+      letter-spacing: 0.1em;
+      line-height: 1.0em;
+      min-width: 140px;
+      color: #ffffff;
+      outline: none;
+      border-style: none;
+      transition: opacity 300ms 0s ease;
+      cursor: pointer;
+      font-family: "Noto Sans JP", sans-serif;
+      background-color: #ff8787;
+    }
+    
+    main section:last-child {
+      padding-bottom: 140px !important;
+    }
+    
+    .select-regit {
+      transition: 0.2s;
+      border: 1px solid #ccc;
+      border-radius: 2em;
+      background-color: #ffffff;
+      font-size: 1rem;
+      position: relative;
+    }
+    
+    .select-regit::before {
+      position: absolute;
+      right: 1em;
+      width: 0;
+      height: 0;
+      padding: 0;
+      content: '';
+      border-left: 0.4em solid transparent;
+      border-right: 0.4em solid transparent;
+      border-top: 0.4em solid #9a9a9a;
+      margin-top: auto;
+      margin-bottom: auto;
+      pointer-events: none;
+      top: 0;
+      bottom: 0;
+    }
+    
+    .select-regit select {
+      padding: 1em 1.5em;
+      font-size: 1rem;
+    }
+    
+    select {
+      width: 100%;
+      cursor: pointer;
+      text-overflow: ellipsis;
+      border: none;
+      outline: none;
+      background: transparent;
+      background-image: none;
+      box-shadow: none;
+      appearance: none;
+    }
+    
+    .select-regit select > option {
+      background-color: #ffffff;
+      color: #000000;
+    }
+    
+    .radio-regist {
+      box-sizing: border-box;
+      cursor: pointer;
+      display: inline-block;
+      padding: 0.5em 1.75em;
+      position: relative;
+      width: auto;
+    }
+    
+    .radio-regist ::before {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      content: '';
+      display: block;
+      height: 1em;
+      left: 0;
+      margin-top: -0.55em;
+      position: absolute;
+      top: 56%;
+      width: 1em;
+    }
+    
+    .radio-regist::after {
+      background-color: #da2429;
+      border-radius: 50%;
+      content: '';
+      display: block;
+      height: 0.5em;
+      width: 0.5em;
+      left: 0.25em;
+      margin-top: -0.2em;
+      opacity: 0;
+      position: absolute;
+      top: 52%;
+      transform: scale3d(.3, .3 1);
+      transition: transform .1s ease-in-out, opacity .1s ease-in-out;
+    }
+    
+    hr {
+      height: 0;
+      overflow: visible;
+    }
+    
+    ul.card_list {
+      display: flex;
+      padding-bottom: 2em;
+    }
+    
+    ul.card_list li {
+      width: 60px;
+      padding-right: 2px;
+    }
+    
+    ul.card_list li img {
+      display: block;
+      width: 100%;
+    }
+    
+    .col_02 {
+      list-style: none;
+    }
+    
+    #sect_regit li {
+      list-style: none;
+    }
+    
+    li {
+      list-style: none !important;
+    }
+    
+    </style>
 
 {% endblock %}

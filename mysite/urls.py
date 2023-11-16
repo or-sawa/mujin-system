@@ -27,3 +27,4 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.IMAGE_URL, document_root=settings.IMAGE_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # 追加

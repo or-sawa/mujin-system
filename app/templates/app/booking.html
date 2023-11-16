@@ -1,0 +1,464 @@
+{% extends "app/base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="card card-booking my-5 mx-auto">
+    <div class="card-body" style="padding: 0 !important;">
+        <!-- <div class="centerbox">
+            <h2 class="black-circle font-montserrat-700">
+                 ハコフィット 予約フォーム 
+            </h2>
+        </div>
+        <br> -->
+        <h5 class="card-title text-center black-circle font-montserrat-700">予約内容</h5>
+        {% for error in form.non_field_errors %}
+            <h5 class="text-danger">{{ error|linebreaksbr }}</h5>
+        {% endfor %}
+        <table class="booking_table mb-4 black-circle font-montserrat-700">
+            <tbody>
+                <tr>
+                    <th>日程</th>
+                    <td>{{ year }}年{{ month }}月{{ day }}日 {{ hour }}:00</td>
+                </tr>
+            </tbody>
+        </table>
+        <h5 class="card-title text-center black-circle font-montserrat-700">予約情報</h5>
+        <form method="post" id="book-form">
+            {% csrf_token %}
+            <table class="booking_table mb-4 black-circle font-montserrat-700">
+                <tbody>
+                    <tr>
+                        <th>名前</th>
+                        <td class="data">
+                            {{ request.user.first_name }}
+                            {{ request.user.last_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Mail</th>
+                        <td class="data">
+                            {{ request.user.email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>注文番号</th>
+                        <td class="data">
+                            {{ order.id }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>注文内容</th>
+                        <td class="data">
+                            {% for item in  user.order_set.last.items.all %}
+                                <p>{{ item }}</p>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- <h5 class="card-title text-center">オプションの申し込み<br>（任意）</h5>
+            
+            <div class="row">
+                <label class="col-sm-4">
+                    <input type="radio" name="booking_option" value="なし" checked="checked" onclick="toggleReadonly(true)"><p>なし</p>
+                </label>
+                {% if family_available <= 1 and user.kind != "ファミリー会員" %}
+                <div class="col-sm-4" style="margin-bottom: 25px;">
+                    <label>
+                        <input type="radio" name="booking_option" value="ペアトレーニング" onclick="toggleReadonly(false)"><p>ペアトレーニング<br>※同伴者も会員である必要があります<br>※時間利用会員お1人につき550円となります<br>※代表して2名分の予約をする方に決済が発生します</p>
+                    </label>
+                    <label>※同伴者のメールアドレス<br>（ペアトレーニング選択時は必須）</label>
+                    <input type="email" name="pair" class="form-control txt-regit" id="myInput" readOnly>
+                </div>
+                {% endif %}
+
+                {% if family_available == 0 and user.kind == "ファミリー会員" %}
+                    <label class="col-sm-4">
+                        <input type="radio" name="booking_option" value="ファミリー予約"><p style="color: red;">ファミリー予約<br>（ご家族での貸し切り予約）</p>
+                    </label>
+                {% endif %}
+                <div class="col-sm-4" style="margin-bottom: 20px;">
+                    <div id="private-trainer">
+                        <span id="target-button">▶️</span>&nbsp;<span style="text-decoration: underline;">個人で契約されているトレーナーと入室する場合</span>
+                    </div>
+                </div>
+                <label class="col-sm-4" id="private-trainer-target" style="display: none;">
+                    <input type="radio" name="booking_option" value="個人契約パーソナル"><p>個人契約パーソナル</p>
+                </label>
+                
+                {% if trainer_available == True %}
+                    <label class="col-sm-4">
+                        <input type="radio" name="booking_option" value="パーソナル"><p style="color: #FF4F02;">パーソナル<br>（初回は別途3,850円）</p>
+                    </label>
+
+                    
+                    {% if user.kind == "セミパーソナル会員" %}
+                        <label class="col-sm-4">
+                            <input type="radio" name="booking_option" value="セミパーソナル"><p style="color: blue;">セミパーソナル</p>
+                        </label>
+                    {% endif %}
+
+                    <div class="row">
+                        <ul style="margin-left: 2rem;">
+                            パーソナル、またはセミパーソナルは以下の日程のご予約のみ可能です
+                            <li>
+                                月曜：16時〜22時
+                            </li>
+                            <li>
+                                火曜：11時〜22時
+                            </li>
+                            <li>
+                                木曜：16時〜22時
+                            </li>
+                            <li>
+                                金曜：13時〜22時
+                            </li>
+                            <li>
+                                土曜：10時〜22時
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+            <hr> -->
+            <h5 class="card-title text-center black-circle font-montserrat-700">規約等の確認（必須）</h5>
+            <div class="u-mtsm">
+                <div data-structure="e-text">利用規約とキャンセルポリシーをお読みの上、同意して送信して下さい。</div>
+                <br>
+                <td><a type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#service-Modal-{{ item.pk }}">利用規約</a></td>
+                
+            </div>
+            <br>
+            <div class="u-mtsm">
+                <br>
+                <td><a type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cancel_policy-Modal-{{ item.pk }}">キャンセルポリシー</a></td>
+                
+            </div>
+            <br>
+            <label>
+                <input type="checkbox" name="agree" value="agreement" required="required">利用規約とキャンセルポリシーに同意する
+            </label>
+            <p id="warning">予約確定するにはチェックを入れてください。</p>
+            <div class="button mx-auto">
+                <button class="btn btn-lg btn-warning btn-block" type="submit" id="mail">予約確定</button>
+            </div>
+            <br>
+            <div style="text-align: center;">
+                <p style="color: blue;">時間利用会員の方は、上記ボタンを押した後の決済画面にて決済完了後に予約が確定されます。</p>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script>
+    function toggleReadonly(isDisabled) {
+        var myInput = document.getElementById("myInput");
+        myInput.readOnly = isDisabled;
+    }
+
+    const form = document.getElementById('book-form');
+    const btn = document.getElementById('mail');
+
+    form.addEventListener('submit', ()=>{
+        btn.disabled = true;
+    });
+
+    const private_trainer = document.getElementById("private-trainer");
+    private_trainer.addEventListener('click', ()=>{
+        const target = document.getElementById('private-trainer-target');
+        const btn = document.getElementById('target-button');
+        if (target.style.display == 'none'){
+            target.style.display = 'block';
+            btn.textContent = '🔽';
+        }
+        else {
+            target.style.display = 'none';
+            btn.textContent = '▶️';
+        }
+    });
+</script>
+<style>
+    .centerbox {
+        text-align: center;
+    }
+
+    .centerbox h2.black-circle {
+        display: inline-block;
+        border: 3px solid #000;
+        border-radius: 2em;
+        padding-left: 2.5em;
+        padding-right: 2.5em;
+        font-size: 16pt;
+        font-weight: 700;
+    }
+
+    .font-montserrat-700 {
+        font-family: "Montserrat", sans-serif, "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+                    "游ゴシック", "Yu Gothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Lucida Grande",
+                    Verdana, "ＭＳ Ｐゴシック", sans-serif;
+        font-weight: 700;
+    }
+
+
+    .w1200 {
+        width: 100%;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-bottom: 80px;
+    }
+
+    
+
+    .w1200 .w1000 {
+        width: 100%;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    p.tx-tax {
+        margin-top: 2em;
+    }
+
+    .clearfix::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    .PRICING table {
+        width: 100% !important;
+    }
+
+    .PRICING table .bgblack {
+        color: white;
+        background-color: black;
+    }
+
+    .PRICING table .bdbnone {
+        border-bottom: none;
+    }
+
+    .PRICING table .vertop {
+        vertical-align: top;
+    }
+
+    .PRICING table td {
+        vertical-align: middle;
+        border: 1px solid #b2b2b2;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    td.w25 {
+        width: 25%;
+    }
+
+    .PRICING table .fz18 {
+        font-size: 18pt;
+        font-weight: bold;
+    }
+
+    .PRICING table .tl {
+        text-align: left;
+    }
+
+    .PRICING table td p {
+        line-height: 1.3;
+        margin-bottom: 0;
+    }
+
+    .PRICING table .bdbnone {
+        border-bottom: none;
+    }
+
+    .PRICING table td {
+        vertical-align: middle;
+        border: 1px solid #b2b2b2;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .PRICING table .fz18 {
+        font-size: 18pt !important;
+        font-weight: bold !important;
+    }
+
+    .PRICING table .leaf {
+        width: 1em;
+    }
+
+    .leaf {
+        width: 1.2rem;
+        margin-right: 0.5rem;
+    }
+
+    .PRICING table .fzsmall {
+        font-size: 10pt;
+    }
+
+    .PRICING table .bdtnone {
+        border-top: none;
+    }
+
+    .PRICING table .verbtm {
+        vertical-align: bottom;
+    }
+
+    .PRICING table .tr {
+        text-align: right;
+    }
+
+    .PRICING table .fwn {
+        font-weight: normal;
+    }
+
+    .PRICING table .orange-border {
+        border: 1px solid #dd5722;
+        margin-bottom: 0.2rem;
+        color: #dd5722;
+        font-weight: bold;
+    }
+
+    .PRICING table .bgGray {
+        background-color: #eae9e8;
+        font-weight: bold;
+    }
+
+    .bgGray {
+        background-color: #e5e5e5;
+    }
+
+    .PRICING table .color-orange {
+        color: #dd5722;
+    }
+
+    .PRICING table td.pd0 {
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+        font-size: 10pt;
+    }
+
+    .yoyakubtn {
+        display: inline-block;
+        line-height: 3em;
+        padding-left: 3em;
+        padding-right: 3em;
+        color: white;
+        background-color: #dd5722;
+        border-radius: 3em;
+    }
+
+    .PRICING table .flexlink {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .bdnonepdf {
+        border: none;
+    }
+
+    .flexlink {
+        border: 1px solid #b2b2b2;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .pdflink {
+        display: inline-block;
+        padding-left: 1em;
+        padding-right: 1em;
+        background-color: #e5e5e5;
+        display: flex;
+        align-items: center;
+    }
+
+    .flexlink .pdflink {
+        height: 3rem;
+    }
+
+    .pdflink img {
+        width: 2em;
+        margin-left: 0.5em;
+    }
+
+    .PRICING table.ptable02sp {
+        margin-bottom: 1rem;
+    }
+
+    .PRICING table.ptable02sp tr td:first-child {
+        width: 80%;
+    }
+
+    @media only screen and (max-width: 500px) {
+        .PRICING table.ptable02sp tr td {
+            padding-top: 0.5em;
+        }
+
+        .PRICING table.ptable02sp p.fee {
+            font-size: 4vw;
+        }
+    }
+
+    @media only screen and (max-width: 600px) {
+        .centerbox h2.black-circle {
+            font-size: 5vw;
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+
+        .w1200 {
+            padding-bottom: 1rem;
+        }
+
+        .w1200 .w1000 {
+            padding-left: 3vw;
+            padding-right: 3vw;
+        }
+
+        .PRICING table .tl {
+            font-size: 3.6vw;
+            padding-top: 0.5em;
+        }
+
+        .PRICING table .fzsmall {
+            font-size: 3.3vw;
+        }
+
+        .flexlink .pdflink {
+            margin-top: 0.5em;
+            display: inline-block;
+            line-height: 3em;
+            height: 3em;
+            margin-bottom: 0.5em;
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+
+        .pcOnly {
+            display: none !important;
+        }
+    }
+
+    @media only screen and (max-width: 1100px) {
+        .w1200 .w1000 {
+            padding-left: 2%;
+            padding-right: 2%;
+        }
+    }
+</style>
+{% endblock %}

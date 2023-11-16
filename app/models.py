@@ -3,12 +3,13 @@ from django.db import models
 
 
 class Item(models.Model):
-    title = models.CharField(max_length=100)
-    price = models.IntegerField()
-    category = models.CharField(max_length=100)
-    slug = models.SlugField()
-    description = models.TextField()
-    image = models.ImageField(upload_to='images')
+    title = models.CharField('商品名',max_length=100)
+    price = models.IntegerField('価格',)
+    category = models.CharField('商品カテゴリー',max_length=100)
+    slug = models.SlugField('商品ID',)
+    description = models.TextField('商品概要',)
+    image = models.ImageField('商品画像',upload_to='images')
+    stock = models.IntegerField('在庫', blank=True, null=True)
 
     def __str__(self):
         return self.title

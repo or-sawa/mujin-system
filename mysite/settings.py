@@ -25,7 +25,7 @@ SECRET_KEY = 'ra^r6s90cr!mq56jwpgm2ww48s1u&c9wg$w&3qsbkya8jn9t7n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -128,6 +128,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 IMAGE_URL = '/images/'
 IMAGE_ROOT = os.path.join(BASE_DIR, 'images')
+# 追加
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
@@ -141,4 +144,4 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # 環境変数にする
-STRIPE_SECRET_KEY = 'sk_test_xxxxx'
+STRIPE_SECRET_KEY = 'sk_test_51LAp72C5BhuaZz3Rtw9Jk94ChQEfTDkiU40snKU7nQO20UiSah4bFy2ZnzJk1cgM8LUQZdV7PwQdtuKJ9HuJSr8u00mdnTKM6k'

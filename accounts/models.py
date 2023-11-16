@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import UserManager, PermissionsMixin
 from django.utils import timezone
+import uuid
 
 
 class UserManager(UserManager):
@@ -30,12 +31,35 @@ class UserManager(UserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+
+    #  性別を選択する選択肢を宣言
+    GENDER_CHOICES = (
+        (0, '男性'),
+        (1, '女性'),
+        (2, 'その他'),
+    )
+
+    AGE_CHOICES = (
+        (1, '10代'),
+        (2, '20代'),
+        (3, '30代'),
+        (4, '40代'),
+        (5, '50代'),
+        (6, '60代'),
+        (7, '70代以上'),
+    )
+
     email = models.EmailField('メールアドレス', unique=True)
     first_name = models.CharField(('姓'), max_length=30)
     last_name = models.CharField(('名'), max_length=30)
+    gender = models.IntegerField(default=0, verbose_name='性別', choices=GENDER_CHOICES)
+    age = models.IntegerField(default=1, verbose_name='年齢', choices=AGE_CHOICES)
+    uuid = models.UUIDField('ユーザーID', default=uuid.uuid4)
+    zipCode = models.CharField('郵便番号', max_length=10, null=True, blank=True)
     address = models.CharField(('住所'), max_length=30, blank=True)
     tel = models.CharField(('電話番号'), max_length=30, blank=True)
     created = models.DateTimeField(('入会日'), default=timezone.now)
+
 
     is_staff = models.BooleanField(
         ('staff status'),

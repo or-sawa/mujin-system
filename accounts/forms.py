@@ -1,10 +1,22 @@
 from django import forms
-from allauth.account.forms import SignupForm
+from django.db import models
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import CustomUser
+from django.views.generic import FormView, TemplateView
 
 
-class SignupUserForm(SignupForm):
+class SignupUserForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, label='姓')
     last_name = forms.CharField(max_length=30, label='名')
+    tel = forms.CharField(max_length=11, label='電話番号')
+    class Meta:
+        model = CustomUser
+        fields = ("first_name", "last_name", "email", "tel", "gender", "age")
+        widgets = {
+            'kind': forms.RadioSelect,
+            'gender': forms.RadioSelect,
+            'age': forms.Select,
+        }
 
     def save(self, request):
         user = super(SignupUserForm, self).save(request)

@@ -5,20 +5,21 @@
 <div class="my-5">
     <div class="row product">
         <div class="col-md-6 mb-4 text-center">
-            <img src="/{{ object.image.url }}" class="img-fluid" alt="">
+            <img src="{{ item_data.image.url }}" class="img-fluid" alt="">
         </div>
 
         <div class="col-md-6 mb-4">
             <div class="card">
                 <div class="card-body px-2 py-1">
                     <div class="p-4">
-                        <h3>{{ object.title }}</h3>
-                        <p class="mb-3">{{ object.category }}</p>
+                        <h3>{{ item_data.title }}</h3>
+                        <p class="mb-3">{{ item_data.category }}</p>
                         <hr>
-                        <p>価格：<span class="text-danger font-weight-bold">{{ object.price }}円</span></p>
+                        <p>価格：<span class="text-danger font-weight-bold">{{ item_data.price }}円</span></p>
+                        <p>在庫：<span class="text-danger font-weight-bold">{{ item_data.stock }}個</span></p>
                         <p class="font-weight-bold">商品説明</p>
-                        <p>{{ object.description|linebreaksbr }}</p>
-                        <a class="btn btn-primary" href="{% url 'additem' object.slug %}">カートに入れる</a>
+                        <p>{{ item_data.description|linebreaksbr }}</p>
+                        <a class="btn btn-primary" href="{% url 'additem' item_data.slug %}">カートに入れる</a>
                     </div>
                 </div>
             </div>
