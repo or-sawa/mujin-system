@@ -13,6 +13,7 @@
                         {% for item in  user.order_set.last.items.all %}
                             <p>{{ item }}</p>
                         {% endfor %}
+                        <p>商品の小計：{{ order.get_total }}円</p>
                     </div>
                 </div>
             </div>
@@ -27,10 +28,10 @@
 
     <div class="d-flex mb-2">
         <div class="mx-3 mr-auto">
-            <a class="btn btn-warning" href="?year={{prev_week.year}}&month={{prev_week.month}}&day={{prev_week.day}}">前週</a>
+            <a class="btn btn-warning" href="?year={{prev_week.year}}&month={{prev_week.month}}&day={{prev_week.day}}&pk={{order_id}}">前週</a>
         </div>
         <div class="mx-3">
-            <a class="btn btn-warning" href="?year={{next_week.year}}&month={{next_week.month}}&day={{next_week.day}}">次週</a>
+            <a class="btn btn-warning" href="?year={{next_week.year}}&month={{next_week.month}}&day={{next_week.day}}&pk={{order_id}}">次週</a>
         </div>
     </div>
     <div class="calendar" style="max-width: 100%; overflow: scroll;">

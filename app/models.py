@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth import get_user_model
 
 
 class Item(models.Model):
@@ -54,3 +56,10 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.user.email
+    
+
+class Booking(models.Model):
+    start = models.DateTimeField('開始時間', default=timezone.now)
+    end = models.DateTimeField('終了時間', default=timezone.now)
+    user = models.ForeignKey(get_user_model(), verbose_name='ユーザー', null=True, blank=True, on_delete=models.CASCADE)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)

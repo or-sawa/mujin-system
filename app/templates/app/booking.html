@@ -54,6 +54,12 @@
                             {% endfor %}
                         </td>
                     </tr>
+                    <tr>
+                        <th>請求金額：</th>
+                        <td class="data">
+                            {{ order.get_total }}円
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <!-- <h5 class="card-title text-center">オプションの申し込み<br>（任意）</h5>
