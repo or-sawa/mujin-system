@@ -101,6 +101,11 @@ main {
     flex: 1;
 }
 
+.messagelist {
+    list-style: none;
+    background-color: greenyellow;
+}
+
 /* index */
 
 .itemlist img {

@@ -31,12 +31,13 @@ class SignupView(views.SignupView):
 
         
         self.form = form
-        self.object = form.save()
+        self.object = form.save(self.request)
         self.object.zipCode = zipCode
         self.object.address = address
         self.object.save()
 
-        login(self.request, self.object)
+        # login(self.request, self.object)
+        login(self.request, self.object, backend='django.contrib.auth.backends.ModelBackend')
         
         return HttpResponseRedirect(self.get_success_url())
     
@@ -47,7 +48,6 @@ class SignupView(views.SignupView):
             "first_name": self.form.cleaned_data["first_name"],
             "last_name": self.form.cleaned_data["last_name"],
             "email": self.form.cleaned_data["email"],
-            "kind": self.form.cleaned_data["kind"],
             "tel": self.form.cleaned_data["tel"],
             "gender": self.form.cleaned_data["gender"],
             "age": self.form.cleaned_data["age"],
@@ -58,12 +58,14 @@ class SignupView(views.SignupView):
         messages.success(
         self.request, '「{}」として登録完了しました。'.format(self.object))
 
-        subject = "ハコフィットへの会員登録が完了しました"
+        subject = "無人販売システムへの会員登録が完了しました"
         message = render_to_string("accounts/registration_mail.txt", context)
         from_email = 'hakofit.reserve@gmail.com'  # 送信者
         recipient_list = [self.form.cleaned_data['email'], "s.seisaku.co@icloud.com"]  # 宛先リスト(to)
         send_mail(subject, message, from_email, recipient_list)
         self.request.session['user_id'] = self.object.id
+
+        return '/'
 
 
 class LoginView(views.LoginView):

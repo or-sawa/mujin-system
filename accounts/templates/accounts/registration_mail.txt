@@ -1,0 +1,26 @@
+{{ first_name }} {{ last_name }}様
+
+メールアドレス: {{ email }}
+
+会員種別: {{ kind }}
+
+こんにちは！
+ハコフィットへの会員登録ありがとうございます。
+
+
+予約はこちらのガイドを参考に行ってください😊
+https://www.box-fit.space/app.html
+
+ハコフィットの最新情報や、筋肉や健康に関するお得な情報は
+こちらのInstagramアカウントから随時、発信しています♪
+https://www.instagram.com/hacofit/
+
+
+————————————————————————————————————
+株式会社Sawa
+大竹山　竜輝
+Mail: s.seisaku.co@icloud.com
+Tel: 0992976922
+
+株式会社Sawa
+鹿児島県鹿児島市下荒田2丁目25-1 木村歯科ビル1F

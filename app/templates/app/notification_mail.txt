@@ -1,0 +1,63 @@
+{{ user.first_name }} {{ user.last_name }}様
+
+{% if subscription_count %}
+
+回数券の残り使用回数は残り{{ subscription_count }}回です。
+
+{% endif %}
+
+メールアドレス: {{ email }}
+
+必ずお支払い状況をご確認ください。
+
+部屋: {{ store }}
+
+開始時間: {{ start_time }}
+
+終了時間: {{ end_time }}
+
+オプション: {{ booking_option }}
+
+{% if pair %}
+同伴者: {{ pair }}
+{% endif %}
+
+入口の暗証番号: {{ pinCode }}
+
+{% if store.name == "Room1" %}
+
+部屋の暗証番号: {{ room1_id }}
+暗証番号を押してからツマミを右に回してください。
+
+{% elif store.name == "Room2" %}
+
+部屋の暗証番号: {{ room2_id }}
+暗証番号を押してからツマミを右に回してください。
+
+{% elif store.name == "Room3" %}
+
+部屋の暗証番号: {{ room3_id }}
+暗証番号を押してからツマミを「左」に回してください。
+
+{% endif %}
+
+こちらの暗証番号は
+{{ open_start }}
+      〜
+{{ end_time }}
+の間のみ使用可能です
+
+※{{ open_start }}を過ぎてから暗証番号を入力して入室をお願い致します。
+
+{% if coupon %}
+今月のご予約が計5件に達しましたので、日頃の感謝を込めて¥100円割引クーポンをプレゼント致します！
+（1回のみ使えます。クーポンの使用期限は本日から1ヶ月以内です。）
+
+次回使えるクーポンコード: {{ coupon }}
+
+クーポンの使い方： https://www.youtube.com/shorts/MaIV1-xK7MU
+
+{% endif %}
+
+
+お問い合わせ: s.seisaku.co@icloud.com

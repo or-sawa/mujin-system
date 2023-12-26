@@ -62,71 +62,7 @@
                     </tr>
                 </tbody>
             </table>
-            <!-- <h5 class="card-title text-center">オプションの申し込み<br>（任意）</h5>
             
-            <div class="row">
-                <label class="col-sm-4">
-                    <input type="radio" name="booking_option" value="なし" checked="checked" onclick="toggleReadonly(true)"><p>なし</p>
-                </label>
-                {% if family_available <= 1 and user.kind != "ファミリー会員" %}
-                <div class="col-sm-4" style="margin-bottom: 25px;">
-                    <label>
-                        <input type="radio" name="booking_option" value="ペアトレーニング" onclick="toggleReadonly(false)"><p>ペアトレーニング<br>※同伴者も会員である必要があります<br>※時間利用会員お1人につき550円となります<br>※代表して2名分の予約をする方に決済が発生します</p>
-                    </label>
-                    <label>※同伴者のメールアドレス<br>（ペアトレーニング選択時は必須）</label>
-                    <input type="email" name="pair" class="form-control txt-regit" id="myInput" readOnly>
-                </div>
-                {% endif %}
-
-                {% if family_available == 0 and user.kind == "ファミリー会員" %}
-                    <label class="col-sm-4">
-                        <input type="radio" name="booking_option" value="ファミリー予約"><p style="color: red;">ファミリー予約<br>（ご家族での貸し切り予約）</p>
-                    </label>
-                {% endif %}
-                <div class="col-sm-4" style="margin-bottom: 20px;">
-                    <div id="private-trainer">
-                        <span id="target-button">▶️</span>&nbsp;<span style="text-decoration: underline;">個人で契約されているトレーナーと入室する場合</span>
-                    </div>
-                </div>
-                <label class="col-sm-4" id="private-trainer-target" style="display: none;">
-                    <input type="radio" name="booking_option" value="個人契約パーソナル"><p>個人契約パーソナル</p>
-                </label>
-                
-                {% if trainer_available == True %}
-                    <label class="col-sm-4">
-                        <input type="radio" name="booking_option" value="パーソナル"><p style="color: #FF4F02;">パーソナル<br>（初回は別途3,850円）</p>
-                    </label>
-
-                    
-                    {% if user.kind == "セミパーソナル会員" %}
-                        <label class="col-sm-4">
-                            <input type="radio" name="booking_option" value="セミパーソナル"><p style="color: blue;">セミパーソナル</p>
-                        </label>
-                    {% endif %}
-
-                    <div class="row">
-                        <ul style="margin-left: 2rem;">
-                            パーソナル、またはセミパーソナルは以下の日程のご予約のみ可能です
-                            <li>
-                                月曜：16時〜22時
-                            </li>
-                            <li>
-                                火曜：11時〜22時
-                            </li>
-                            <li>
-                                木曜：16時〜22時
-                            </li>
-                            <li>
-                                金曜：13時〜22時
-                            </li>
-                            <li>
-                                土曜：10時〜22時
-                            </li>
-                        </ul>
-                    </div>
-                {% endif %}
-            </div>
-            <hr> -->
             <h5 class="card-title text-center black-circle font-montserrat-700">規約等の確認（必須）</h5>
             <div class="u-mtsm">
                 <div data-structure="e-text">利用規約とキャンセルポリシーをお読みの上、同意して送信して下さい。</div>
@@ -150,7 +86,7 @@
             </div>
             <br>
             <div style="text-align: center;">
-                <p style="color: blue;">時間利用会員の方は、上記ボタンを押した後の決済画面にて決済完了後に予約が確定されます。</p>
+                <p style="color: blue;">上記ボタンを押した後の決済画面にて決済完了後に予約が確定されます。</p>
             </div>
         </form>
     </div>

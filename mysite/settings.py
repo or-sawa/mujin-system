@@ -30,6 +30,14 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,7 +62,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    
+}
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -132,6 +145,21 @@ IMAGE_ROOT = os.path.join(BASE_DIR, 'images')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+#メール設定
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# DEFAULT_FROM_EMAIL = 's.seisaku.co@icloud.com'
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_HOST_USER = 'hakofit.reserve@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'wvwnmwuolhweqbsl'
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
 AUTH_USER_MODEL = 'accounts.CustomUser'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
@@ -145,3 +173,5 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # 環境変数にする
 STRIPE_SECRET_KEY = 'sk_test_51LAp72C5BhuaZz3Rtw9Jk94ChQEfTDkiU40snKU7nQO20UiSah4bFy2ZnzJk1cgM8LUQZdV7PwQdtuKJ9HuJSr8u00mdnTKM6k'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
